@@ -1,21 +1,37 @@
-<h1>{{title}}</h1>
-<table>
-    <tr>
-        <th>
-            Users.id
-        </th>
-        <th>
-            Users.username
-        </th>
-    </tr>
-    <ul>
-        <li *ngFor="let user of Users">
-    <tr>
-        <td>{{user.id}}</td>
-        <td>{{user.username}}</td>
-    </tr>
+<app-nav></app-nav>
+<br><br><br>
+<!-- <p>User Details</p> -->
+<div class="container" style="margin: block;">
+    <router-outlet></router-outlet>
+    <!-- <app-home></app-home> -->
+<!-- <table class="container">
+        <thead >
+            <tr>
+                <th>
+                    User ID
+                </th>
+                <th>
+                    User Name
+                </th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            <tr *ngFor="let user of Users">
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+             </tr>
+        </tbody>
+        <!-- <ul>
+            <li *ngFor="let user of Users">
+        <tr>
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+        </tr>
+    
+    </li>
+    </ul> -->
+    <!-- </table> --> 
+</div>
 
-</li>
-</ul>
-</table>
 
