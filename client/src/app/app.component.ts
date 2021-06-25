@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit{
   title = 'Sam App'; 
-  Users:any;
+  User:any;
   
 
   // private http:HttpClient,
@@ -26,6 +26,7 @@ export class AppComponent implements OnInit{
 
     setCurrentUser(){
       var localStorage: Storage|null;
+      console.log(localStorage.getItem('user'));
       const user:User=JSON.parse(localStorage.getItem('user'));
       this.accountservice.setCurrentUser(user)
     }

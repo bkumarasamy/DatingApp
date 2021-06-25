@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { User } from './../_models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -10,7 +11,7 @@ import { ReplaySubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AccountService {
-baseurl='https://localhost:5001/api/';
+baseurl=environment.apiUrl;  //'https://localhost:5001/api/';
 private currentUserSource=new ReplaySubject<User>(1);
 currentUser$=this.currentUserSource.asObservable();
 // currentUser$: any;
@@ -24,7 +25,8 @@ currentUser$=this.currentUserSource.asObservable();
 
 
   login(model: any): Observable<any> {
-    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) 
+  };
     const url = this.baseurl+"Account/login";
     console.log(url)
     console.log(model)
