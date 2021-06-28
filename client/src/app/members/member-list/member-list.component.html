@@ -1,5 +1,5 @@
 <div class="row">
-    <div *ngFor="let mem of members" class="col-2">
+    <div *ngFor="let mem of members$|async" class="col-2">
         <app-member-card [member]="mem"></app-member-card>
         <!-- <p >{{mem.knownUs}}</p> -->
     </div>

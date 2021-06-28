@@ -18,6 +18,8 @@ namespace API.Helpers
                .ForMember(dest=>dest.KnownUs,opt=>opt.MapFrom(src=>
                         src.Username.ToString()));
             CreateMap<Photo,PhotoDTO>();
+
+            CreateMap<MemberUpdateDto,AppUser>();
         }
     }
 }
