@@ -36,8 +36,12 @@ currentUser$=this.currentUserSource.asObservable();
             map((response:User) => {
                 const user=response;
                 if(user){
-                  localStorage.setItem('user',JSON.stringify(user));
-                  this.currentUserSource.next(user);
+
+                  this.setCurrentUser(user);
+
+                  // localStorage.setItem('user',JSON.stringify(user));
+                  // this.currentUserSource.next(user);
+
                   // this.currentUser$=user;
                   // console.log(user);
                   // console.log(this.currentUser$);
@@ -48,6 +52,7 @@ currentUser$=this.currentUserSource.asObservable();
   }
 
   setCurrentUser(user:User){
+    localStorage.setItem('user',JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 
@@ -76,8 +81,10 @@ currentUser$=this.currentUserSource.asObservable();
       map((user:User)=>{
           if(user)
           {
-              localStorage.setItem("user",JSON.stringify(user));
-              this.currentUserSource.next(user);
+            this.setCurrentUser(user);
+
+              // localStorage.setItem("user",JSON.stringify(user));
+              // this.currentUserSource.next(user);
           }
           return user;
         })
