@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -29,11 +31,31 @@ namespace API.Data
             // throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<MemberDTO>> GetMembersAsync()
+        public async Task<PagedList<MemberDTO>> GetMembersAsync(UserParams userParams)
         {
-            return await _context.User
-                .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var query= _context.User.AsQueryable();
+
+            query=query.Where(u => u.Username != userParams.CurrentUsername);
+            query=query.Where(u => u.Gender == userParams.Gender);
+
+            var minDob = DateTime.Today.AddYears(-userParams.MaxAge-1);
+            var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
+            query=query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+
+            query=userParams.OrderBy switch
+            {
+                "created" => query.OrderByDescending(u => u.Created),
+                   _ => query.OrderByDescending(u => u.LastActive)
+            };
+
+            return await PagedList<MemberDTO>.CreateAsync(query.ProjectTo<MemberDTO>(_mapper
+                .ConfigurationProvider).AsNoTracking(),
+                    userParams.PageNumber,userParams.PageSize);
+               
+            // return await _context.User
+            //     .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
+            //     .ToListAsync();
         }
 
         public async Task<IEnumerable<AppUser>> GetUserAsync()
@@ -47,14 +69,15 @@ namespace API.Data
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.User.FindAsync(id);
+            // return await _context.User.FirstOrDefaultAsync(id);
             // throw new System.NotImplementedException();
         }
 
         public async Task<AppUser> GetUserByNameAsync(string username)
         {
             return await _context.User
-                                 .Include(p => p.Photos)
-                                 .SingleOrDefaultAsync(x => x.Username == username);
+                    .Include(p => p.Photos)
+                    .SingleOrDefaultAsync(x => x.Username == username);
             //throw new System.NotImplementedException();
         }
 
@@ -67,6 +90,7 @@ namespace API.Data
         public void update(AppUser user)
         {
             _context.Entry(user).State = EntityState.Modified;
+            
             // throw new System.NotImplementedException();
         }
     }

@@ -1,20 +1,15 @@
 using API.Data;
+using API.Helpers;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    
+    [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]
     [Route("api/[Controller]")]
     public class BaseApiController : ControllerBase
     {
-        // public DataContext _context { get; }
-        // public BaseApiController(DataContext context)
-        // {
-        //     _context = context;
-        // }
-
         
     }
 }

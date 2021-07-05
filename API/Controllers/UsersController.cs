@@ -2,6 +2,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -36,11 +37,21 @@ namespace API.Controllers
         // }
         [HttpGet]
         // [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<MemberDTO>>> Getuser()
+        public async Task<ActionResult<IEnumerable<MemberDTO>>> Getuser([FromQuery]UserParams userParams)
         {
             // return await _context.User.ToListAsync();
+            var user = await _userRepository.GetUserByNameAsync(User.GetuserName());
+            userParams.CurrentUsername = (string.IsNullOrEmpty(User.GetuserName())?user.Username:User.GetuserName());
 
-            var users = await _userRepository.GetMembersAsync();
+            if(string.IsNullOrEmpty(userParams.Gender))
+            {
+            userParams.Gender = user.Gender == "male"? "female": "male";
+            }
+
+            var users = await _userRepository.GetMembersAsync(userParams);
+
+            Response.AddPaginationHeader(users.CurrentPage,users.PageSize,
+                users.TotalCount,users.TotalPages);
 
             return Ok(users);
 
@@ -71,7 +82,7 @@ namespace API.Controllers
 
             _mapper.Map(memberUpdateDto, user);
 
-            _userRepository.update(user);
+            if(!string.IsNullOrEmpty(user.Username)) _userRepository.update(user);
 
             if (await _userRepository.SaveAllAsync()) return NoContent();
 
@@ -116,11 +127,11 @@ namespace API.Controllers
         {
             var user=await _userRepository.GetUserByNameAsync(User.GetuserName());
 
-            var photo=user.Photos.FirstOrDefault(x=>x.ID==photoId);
+            var photo=user.Photos.FirstOrDefault(x => x.ID == photoId);
 
             if(photo.IsMain) return BadRequest("This is already your main photo");
 
-            var currentMain=user.Photos.FirstOrDefault(x=>x.IsMain);
+            var currentMain=user.Photos.FirstOrDefault(x => x.IsMain);
             if(currentMain!=null) currentMain.IsMain=false;
             photo.IsMain=true;
 

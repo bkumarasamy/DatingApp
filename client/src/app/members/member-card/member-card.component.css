@@ -26,7 +26,7 @@
     opacity: 0; 
 }
 .card-img-wrapper:hover .memebr-icons {
-    bottom:0;
+    bottom: 0;
     opacity: 1;
 }
 
