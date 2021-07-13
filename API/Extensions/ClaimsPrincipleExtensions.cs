@@ -1,3 +1,4 @@
+using System;
 using System.Security.Claims;
 
 namespace API.Extensions
@@ -6,13 +7,13 @@ namespace API.Extensions
     {
         public static string GetuserName(this ClaimsPrincipal user)
         {
-            return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            //  return user.FindFirst(ClaimTypes.Name)?.Value;
+            //return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+              return user.FindFirst(ClaimTypes.Name)?.Value;
         }
 
         public static int GetuserId(this ClaimsPrincipal user)
         {
-            return int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return Convert.ToInt32(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
     }
 }

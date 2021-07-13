@@ -9,6 +9,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
+// import { type } from 'os';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -29,9 +30,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                    }
                  }
                  throw modalStateErrors.flat();
-               }else {
+               }else if(typeof(error.error)==='object'){
                  this.toastr.error(error.statusText,error.status);
-               }                 
+               }else {
+                 this.toastr.error(error.error,error.status);
+               }             
               break;
             case 401:
                 this.toastr.error(error.statusText,error.status);
