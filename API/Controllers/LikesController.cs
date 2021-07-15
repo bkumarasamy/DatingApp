@@ -24,7 +24,7 @@ namespace API.Controllers
         [HttpPost("{username}")]
         public async Task<ActionResult> AddLike(string username)
         {
-            var sourceUserId=User.GetuserId();
+            var sourceUserId=User.GetUserId();
             var likedUser= await _userRepository.GetUserByNameAsync(username);
             var sourceUser= await _likesRepository.GetUserWithLikes(sourceUserId);
 
@@ -51,7 +51,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes([FromQuery]LikeParams likeParams)
         {
-            likeParams.UserId=User.GetuserId();
+            likeParams.UserId=User.GetUserId();
             var users= await _likesRepository.GetUserLikes(likeParams);
 
             Response.AddPaginationHeader(users.CurrentPage,

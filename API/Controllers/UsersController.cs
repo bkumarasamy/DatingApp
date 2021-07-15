@@ -40,8 +40,8 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<MemberDTO>>> Getuser([FromQuery]UserParams userParams)
         {
             // return await _context.User.ToListAsync();
-            var user = await _userRepository.GetUserByNameAsync(User.GetuserName());
-            userParams.CurrentUsername = (string.IsNullOrEmpty(User.GetuserName())?user.Username:User.GetuserName());
+            var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
+            userParams.CurrentUsername = (string.IsNullOrEmpty(User.GetUsername())?user.Username:User.GetUsername());
 
             if(string.IsNullOrEmpty(userParams.Gender))
             {
@@ -78,7 +78,7 @@ namespace API.Controllers
         {
             // var username=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             // var username=User.GetuserName();
-            var user = await _userRepository.GetUserByNameAsync(User.GetuserName());
+            var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
 
             _mapper.Map(memberUpdateDto, user);
 
@@ -93,7 +93,7 @@ namespace API.Controllers
         [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDTO>> AddPhoto(IFormFile file)
         {
-            var user = await _userRepository.GetUserByNameAsync(User.GetuserName());
+            var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
             
             var result = await _photoService.AddPhotoAsync(file);
 
@@ -125,7 +125,7 @@ namespace API.Controllers
         [HttpPut("set-main-photo/{photoId}")]
         public async Task<ActionResult> SetMainPhoto(int photoId)
         {
-            var user=await _userRepository.GetUserByNameAsync(User.GetuserName());
+            var user=await _userRepository.GetUserByNameAsync(User.GetUsername());
 
             var photo=user.Photos.FirstOrDefault(x => x.ID == photoId);
 
@@ -143,7 +143,7 @@ namespace API.Controllers
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
-            var user=await _userRepository.GetUserByNameAsync(User.GetuserName());
+            var user=await _userRepository.GetUserByNameAsync(User.GetUsername());
 
             var photo=user.Photos.FirstOrDefault(x=>x.ID==photoId);
                 
