@@ -35,13 +35,14 @@ namespace API.Controllers
         // {
         //     _context = context;
         // }
+        // [Authorize(Roles ="Admin")]
         [HttpGet]
         // [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<MemberDTO>>> Getuser([FromQuery]UserParams userParams)
         {
             // return await _context.User.ToListAsync();
             var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
-            userParams.CurrentUsername = (string.IsNullOrEmpty(User.GetUsername())?user.Username:User.GetUsername());
+            userParams.CurrentUsername = (string.IsNullOrEmpty(User.GetUsername())?user.UserName:User.GetUsername());
 
             if(string.IsNullOrEmpty(userParams.Gender))
             {
@@ -62,6 +63,7 @@ namespace API.Controllers
             //return Ok(await _userRepository.GetUserAsync());
         }
         //api/Getuser/lisa
+        // [Authorize(Roles ="Member")]
         [HttpGet("{username}",Name ="GetUser")]
         //[Authorize]
         public async Task<ActionResult<MemberDTO>> GetuserName(string username)
@@ -82,7 +84,7 @@ namespace API.Controllers
 
             _mapper.Map(memberUpdateDto, user);
 
-            if(!string.IsNullOrEmpty(user.Username)) _userRepository.update(user);
+            if(!string.IsNullOrEmpty(user.UserName)) _userRepository.update(user);
 
             if (await _userRepository.SaveAllAsync()) return NoContent();
 
@@ -114,7 +116,7 @@ namespace API.Controllers
             if(await _userRepository.SaveAllAsync())
             {
                 // return _mapper.Map<PhotoDTO>(photo);  
-                return CreatedAtRoute("GetUser",new{username=user.Username},_mapper.Map<PhotoDTO>(photo));         
+                return CreatedAtRoute("GetUser",new{username=user.UserName},_mapper.Map<PhotoDTO>(photo));         
             }
                 
 

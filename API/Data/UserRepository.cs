@@ -24,8 +24,8 @@ namespace API.Data
 
         public async Task<MemberDTO> GetMemberAsync(string username)
         {
-            return await _context.User
-                .Where(x => x.Username == username)
+            return await _context.Users
+                .Where(x => x.UserName == username)
                 .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
             // throw new System.NotImplementedException();
@@ -33,9 +33,9 @@ namespace API.Data
 
         public async Task<PagedList<MemberDTO>> GetMembersAsync(UserParams userParams)
         {
-            var query= _context.User.AsQueryable();
+            var query= _context.Users.AsQueryable();
 
-            query=query.Where(u => u.Username != userParams.CurrentUsername);
+            query=query.Where(u => u.UserName != userParams.CurrentUsername);
             query=query.Where(u => u.Gender == userParams.Gender);
 
             var minDob = DateTime.Today.AddYears(-userParams.MaxAge-1);
@@ -60,7 +60,7 @@ namespace API.Data
 
         public async Task<IEnumerable<AppUser>> GetUserAsync()
         {
-            return await _context.User
+            return await _context.Users
             .Include(p => p.Photos)
             .ToListAsync();
             //throw new System.NotImplementedException();
@@ -68,16 +68,16 @@ namespace API.Data
 
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
-            return await _context.User.FindAsync(id);
+            return await _context.Users.FindAsync(id);
             // return await _context.User.FirstOrDefaultAsync(id);
             // throw new System.NotImplementedException();
         }
 
         public async Task<AppUser> GetUserByNameAsync(string username)
         {
-            return await _context.User
+            return await _context.Users
                     .Include(p => p.Photos)
-                    .SingleOrDefaultAsync(x => x.Username == username);
+                    .SingleOrDefaultAsync(x => x.UserName == username);
             //throw new System.NotImplementedException();
         }
 

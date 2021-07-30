@@ -1,6 +1,6 @@
 [
     {
-      "Username": "Enid",
+      "UserName": "Enid",
       "Gender": "female",
       "DateOfBirth": "1965-09-21",
       "KnownAs": "Enid",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "Username": "Hilda",
+      "UserName": "Hilda",
       "Gender": "female",
       "DateOfBirth": "1964-08-17",
       "KnownAs": "Hilda",
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "Username": "Kayla",
+      "UserName": "Kayla",
       "Gender": "female",
       "DateOfBirth": "1950-12-17",
       "KnownAs": "Kayla",
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "Username": "Bernadine",
+      "UserName": "Bernadine",
       "Gender": "female",
       "DateOfBirth": "1961-07-15",
       "KnownAs": "Bernadine",
@@ -76,7 +76,7 @@
       ]
     },
     {
-      "Username": "Paulette",
+      "UserName": "Paulette",
       "Gender": "female",
       "DateOfBirth": "1997-07-04",
       "KnownAs": "Paulette",
@@ -95,7 +95,7 @@
       ]
     },
     {
-          "Username": "Knox",
+          "UserName": "Knox",
           "Gender": "male",
           "DateOfBirth": "1997-07-25",
           "KnownAs": "Knox",
@@ -114,7 +114,7 @@
           ]
         },
         {
-          "Username": "Beach",
+          "UserName": "Beach",
           "Gender": "male",
           "DateOfBirth": "1962-01-11",
           "KnownAs": "Beach",
@@ -133,7 +133,7 @@
           ]
         },
         {
-          "Username": "Harvey",
+          "UserName": "Harvey",
           "Gender": "male",
           "DateOfBirth": "1956-12-01",
           "KnownAs": "Harvey",
@@ -152,7 +152,7 @@
           ]
         },
         {
-          "Username": "Oneal",
+          "UserName": "Oneal",
           "Gender": "male",
           "DateOfBirth": "1974-12-21",
           "KnownAs": "Oneal",
@@ -171,7 +171,7 @@
           ]
         },
         {
-          "Username": "Franklin",
+          "UserName": "Franklin",
           "Gender": "male",
           "DateOfBirth": "1999-05-10",
           "KnownAs": "Franklin",
