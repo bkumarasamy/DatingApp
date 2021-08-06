@@ -1,3 +1,4 @@
+import { PresenceService } from './presence.service';
 import { environment } from './../../environments/environment';
 import { User } from './../_models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -16,7 +17,8 @@ private currentUserSource=new ReplaySubject<User>(1);
 currentUser$=this.currentUserSource.asObservable();
 // currentUser$: any;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,
+    private presenceservice:PresenceService) { }
 
   // login(model:any){
   //   const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
@@ -28,9 +30,9 @@ currentUser$=this.currentUserSource.asObservable();
     const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) 
   };
     const url = this.baseurl+"Account/login";
-    console.log(url)
-    console.log(model)
-    console.log(options)
+    // console.log(url)
+    // console.log(model)
+    // console.log(options)
 
     return this.http.post<any>(url, model, options).pipe(
             map((response:User) => {
@@ -38,13 +40,7 @@ currentUser$=this.currentUserSource.asObservable();
                 if(user){
 
                   this.setCurrentUser(user);
-
-                  // localStorage.setItem('user',JSON.stringify(user));
-                  // this.currentUserSource.next(user);
-
-                  // this.currentUser$=user;
-                  // console.log(user);
-                  // console.log(this.currentUser$);
+                  this.presenceservice.createHubConnection(user);
                 } 
                 return user;
             })
@@ -62,6 +58,7 @@ currentUser$=this.currentUserSource.asObservable();
   logout(){
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+    this.presenceservice.stopHubConnection();
   }
 
   getDecodedToken(token){
@@ -89,7 +86,7 @@ currentUser$=this.currentUserSource.asObservable();
           if(user)
           {
             this.setCurrentUser(user);
-
+            this.presenceservice.createHubConnection(user);
               // localStorage.setItem("user",JSON.stringify(user));
               // this.currentUserSource.next(user);
           }
