@@ -11,7 +11,7 @@ import { take } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PresenceService {
-  hubUrl=environment.huburl;
+  hubUrl=environment.hubUrl;
   private hubConnection:HubConnection
   private onlineUsersSource=new BehaviorSubject<string[]>([]);
   onlineUsers$=this.onlineUsersSource.asObservable();

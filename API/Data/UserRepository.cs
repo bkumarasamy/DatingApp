@@ -81,11 +81,18 @@ namespace API.Data
             //throw new System.NotImplementedException();
         }
 
-        public async Task<bool> SaveAllAsync()
+        public async Task<string> GetUserGender(string username)
         {
-            return await _context.SaveChangesAsync() > 0;
-            //throw new System.NotImplementedException();
+            return await _context.Users
+                        .Where(x => x.UserName == username)
+                        .Select(x => x.Gender).FirstOrDefaultAsync();
         }
+
+        // public async Task<bool> SaveAllAsync()
+        // {
+        //     return await _context.SaveChangesAsync() > 0;
+        //     //throw new System.NotImplementedException();
+        // }
 
         public void update(AppUser user)
         {

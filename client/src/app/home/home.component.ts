@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './../_models/user';
 import { Component, Input, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 const httpOptions={
   headers:new HttpHeaders({
@@ -14,8 +15,9 @@ const httpOptions={
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-registerMode=false;
-users:any;
+  baseUrl=environment.apiUrl;  
+  registerMode=false;
+  users:any;
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
@@ -27,7 +29,8 @@ users:any;
   }
 
   getuser(){
-    this.http.get('https://localhost:5001/api/users',httpOptions).subscribe(users => this.users = users);
+    this.http.get(this.baseUrl+'users',httpOptions).subscribe(users => this.users = users);
+    // this.http.get('https://localhost:5001/api/users',httpOptions).subscribe(users => this.users = users);
   }
 
   public cancelRegisterMode(event: boolean)

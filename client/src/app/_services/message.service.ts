@@ -18,7 +18,7 @@ import { Group } from '../_models/group';
 })
 export class MessageService {
   baseUrl=environment.apiUrl;
-  hubUrl=environment.huburl;
+  hubUrl=environment.hubUrl;
   private hubConnection:HubConnection;
   private messageThreadSource =new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
@@ -76,7 +76,7 @@ export class MessageService {
   }
 
   async sendMessage(username:string,content:string){
-    return this.hubConnection.invoke('SendMessage',{recipientUsername: username,content })
+    return this.hubConnection.invoke('sendMessage',{recipientUsername: username,content })
       .catch(error => console.log(error));
   }
 
